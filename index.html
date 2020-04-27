@@ -15,14 +15,14 @@ canvas {
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece = new component(30, 30, "red", 0, 240);
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
+        this.canvas.width = 510;
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
@@ -57,23 +57,34 @@ function updateGameArea() {
 }
 
 function moveup() {
-    myGamePiece.y -= 30; 
-    myGamePiece.newPos();   
+    if(myGamePiece.y>0){
+        myGamePiece.y -= 30; 
+        myGamePiece.newPos();   
+    }
 }
 
+
+
 function movedown() {
-    myGamePiece.y += 30; 
-    myGamePiece.newPos();   
+    if(myGamePiece.y<myGameArea.canvas.height-30){
+        myGamePiece.y += 30; 
+        myGamePiece.newPos();   
+    }
 }
 
 function moveleft() {
-    myGamePiece.x -= 30; 
-    myGamePiece.newPos();   
+
+    if(myGamePiece.x>0){
+        myGamePiece.x -= 30; 
+        myGamePiece.newPos();   
+    }   
 }
 
 function moveright() {
-    myGamePiece.x += 30; 
-    myGamePiece.newPos();   
+    if(myGamePiece.x<myGameArea.canvas.width-30){
+        myGamePiece.x += 30; 
+        myGamePiece.newPos();   
+    } 
 }
 
 document.onkeydown = function(event) {
