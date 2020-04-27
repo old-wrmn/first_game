@@ -10,8 +10,21 @@ canvas {
 </style>
 </head>
 <body onload="start()"><br>
-    <button onclick="startGame()" >New Game</button>
+
+    <h3>Select Level</h3>
+    <div id="buttonsContainer"></div>
+    <script>
+        const buttonsContainer = document.getElementById("buttonsContainer");
+        for (let i = 0; i < 5; i++) {
+            const button = document.createElement("button");
+            button.innerText = i+1;
+            button.addEventListener("click", function() {
+                startGame(i)
+            })
+            buttonsContainer.appendChild(button);
+        }
     
+    </script>
     <h1 id="title">Game abal-abal</h1>
 <script>
 
@@ -21,9 +34,9 @@ function start() {
     myGameArea.start();
 }
 
-function startGame(){
+function startGame(j){
     myGamePiece = new component(30, 30, "red", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
-    myGameArea.go();
+    myGameArea.go(j);
 }
 
 var myGameArea = {
@@ -34,8 +47,13 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         },
-    go : function(){
-        this.interval = setInterval(updateGameArea, 200);
+    go : function(j){
+        clearInterval(this.interval);
+        var k=1280;
+        for(var i=0;i<j;i++){
+            k=k/2;
+        }
+        this.interval = setInterval(updateGameArea, k);
     },
     stop : function(){
         clearInterval(this.interval);
@@ -76,25 +94,33 @@ function updateGameArea() {
 }
 
 function moveup() {
+    if(myGamePiece.speedY != 30){
         myGamePiece.speedY = -30;  
         myGamePiece.speedX = 0; 
+    }
 }
 
 
 
 function movedown() {
+    if(myGamePiece.speedY != -30){
         myGamePiece.speedY = 30;  
         myGamePiece.speedX = 0;  
+    }
 }
 
 function moveleft() {
+    if(myGamePiece.speedX != 30){
         myGamePiece.speedY = 0;  
         myGamePiece.speedX = -30;      
+    }
 }
 
 function moveright() {
+    if(myGamePiece.speedX != -30){
         myGamePiece.speedY = 0;  
         myGamePiece.speedX = 30;  
+    }
 }
 
 document.onkeydown = function(event) {
