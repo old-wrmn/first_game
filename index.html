@@ -9,14 +9,21 @@ canvas {
 }
 </style>
 </head>
-<body onload="startGame()">
+<body onload="start()"><br>
+    <button onclick="startGame()" >New Game</button>
+    
+    <h1 id="title">Game abal-abal</h1>
 <script>
 
 var myGamePiece;
 
-function startGame() {
-    myGamePiece = new component(30, 30, "red", 0, 240);
+function start() {
     myGameArea.start();
+}
+
+function startGame(){
+    myGamePiece = new component(30, 30, "red", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
+    myGameArea.go();
 }
 
 var myGameArea = {
@@ -26,7 +33,13 @@ var myGameArea = {
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        },
+    go : function(){
+        this.interval = setInterval(updateGameArea, 200);
+    },
+    stop : function(){
+        clearInterval(this.interval);
+        window.alert("game over");
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -46,45 +59,42 @@ function component(width, height, color, x, y) {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.newPos = function() {
-        this.x += this.speedX;
-        this.y += this.speedY;        
+        if(myGamePiece.x>=0 && myGamePiece.x<myGameArea.canvas.width && myGamePiece.y>=0 && myGamePiece.y<myGameArea.canvas.height){
+            this.x += this.speedX;
+            this.y += this.speedY; 
+            }
+        else{
+            myGameArea.stop();
+        }
     }    
 }
 
 function updateGameArea() {
     myGameArea.clear(); 
     myGamePiece.update();
+    myGamePiece.newPos();  
 }
 
 function moveup() {
-    if(myGamePiece.y>0){
-        myGamePiece.y -= 30; 
-        myGamePiece.newPos();   
-    }
+        myGamePiece.speedY = -30;  
+        myGamePiece.speedX = 0; 
 }
 
 
 
 function movedown() {
-    if(myGamePiece.y<myGameArea.canvas.height-30){
-        myGamePiece.y += 30; 
-        myGamePiece.newPos();   
-    }
+        myGamePiece.speedY = 30;  
+        myGamePiece.speedX = 0;  
 }
 
 function moveleft() {
-
-    if(myGamePiece.x>0){
-        myGamePiece.x -= 30; 
-        myGamePiece.newPos();   
-    }   
+        myGamePiece.speedY = 0;  
+        myGamePiece.speedX = -30;      
 }
 
 function moveright() {
-    if(myGamePiece.x<myGameArea.canvas.width-30){
-        myGamePiece.x += 30; 
-        myGamePiece.newPos();   
-    } 
+        myGamePiece.speedY = 0;  
+        myGamePiece.speedX = 30;  
 }
 
 document.onkeydown = function(event) {
