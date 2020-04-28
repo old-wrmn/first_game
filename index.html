@@ -10,9 +10,11 @@ canvas {
 </style>
 </head>
 <body onload="start()"><br>
-
+    scores<h2 id="score">0</h2>
+    <br>
     <h3>Select Level</h3>
     <div id="buttonsContainer"></div>
+    
     <script>
         const buttonsContainer = document.getElementById("buttonsContainer");
         for (let i = 0; i < 5; i++) {
@@ -29,6 +31,8 @@ canvas {
 <script>
 
 var myGamePiece;
+var food;
+var score=0;
 
 function start() {
     myGameArea.start();
@@ -36,6 +40,7 @@ function start() {
 
 function startGame(j){
     myGamePiece = new component(30, 30, "red", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
+    foods();
     myGameArea.go(j);
 }
 
@@ -48,6 +53,7 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         },
     go : function(j){
+        updateGameArea();
         clearInterval(this.interval);
         var k=1280;
         for(var i=0;i<j;i++){
@@ -90,17 +96,40 @@ function component(width, height, color, x, y) {
 function updateGameArea() {
     myGameArea.clear(); 
     myGamePiece.update();
-    myGamePiece.newPos();  
+    myGamePiece.newPos();
+    if(myGamePiece.x == food.x && myGamePiece.y == food.y){
+        updateScore();
+        foods();
+    }
+    food.update();  
 }
 
+function updateScore(){
+    score +=30;
+    document.getElementById("score").innerHTML = score;
+}
+
+function foods(){
+    food = new gameFood(30, 30, "green", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
+}
+
+function gameFood(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
 function moveup() {
     if(myGamePiece.speedY != 30){
         myGamePiece.speedY = -30;  
         myGamePiece.speedX = 0; 
     }
 }
-
-
 
 function movedown() {
     if(myGamePiece.speedY != -30){
