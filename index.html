@@ -11,7 +11,6 @@ canvas {
 </head>
 <body onload="start()"><br>
     scores<h2 id="score">0</h2>
-    <br>
     <h3>Select Level</h3>
     <div id="buttonsContainer"></div>
     
@@ -32,14 +31,16 @@ canvas {
 
 var myGamePiece;
 var food;
-var score=0;
+var score;
+
 
 function start() {
     myGameArea.start();
 }
 
 function startGame(j){
-    myGamePiece = new component(30, 30, "red", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
+    myGamePiece = new component(10, 10, "red", Math.floor(Math.random() * (myGameArea.canvas.width/10))*10, Math.floor(Math.random() * (myGameArea.canvas.height/10))*10);
+    score=0;    
     foods();
     myGameArea.go(j);
 }
@@ -47,15 +48,15 @@ function startGame(j){
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 510;
-        this.canvas.height = 270;
+        this.canvas.width = 800;
+        this.canvas.height = 400;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         },
     go : function(j){
         updateGameArea();
         clearInterval(this.interval);
-        var k=1280;
+        var k=400;
         for(var i=0;i<j;i++){
             k=k/2;
         }
@@ -98,19 +99,20 @@ function updateGameArea() {
     myGamePiece.update();
     myGamePiece.newPos();
     if(myGamePiece.x == food.x && myGamePiece.y == food.y){
-        updateScore();
+        score +=10;
         foods();
     }
+    updateScore();
     food.update();  
 }
 
 function updateScore(){
-    score +=30;
     document.getElementById("score").innerHTML = score;
 }
 
 function foods(){
-    food = new gameFood(30, 30, "green", Math.floor(Math.random() * (myGameArea.canvas.width/30))*30, Math.floor(Math.random() * (myGameArea.canvas.height/30))*30);
+    var rand =  Math.floor(Math.random() * 999999) 
+    food = new gameFood(10, 10, "#"+rand, Math.floor(Math.random() * (myGameArea.canvas.width/10))*10, Math.floor(Math.random() * (myGameArea.canvas.height/10))*10);
 }
 
 function gameFood(width, height, color, x, y) {
@@ -125,30 +127,30 @@ function gameFood(width, height, color, x, y) {
     }
 }
 function moveup() {
-    if(myGamePiece.speedY != 30){
-        myGamePiece.speedY = -30;  
+    if(myGamePiece.speedY != 10){
+        myGamePiece.speedY = -10;  
         myGamePiece.speedX = 0; 
     }
 }
 
 function movedown() {
-    if(myGamePiece.speedY != -30){
-        myGamePiece.speedY = 30;  
+    if(myGamePiece.speedY != -10){
+        myGamePiece.speedY = 10;  
         myGamePiece.speedX = 0;  
     }
 }
 
 function moveleft() {
-    if(myGamePiece.speedX != 30){
+    if(myGamePiece.speedX != 10){
         myGamePiece.speedY = 0;  
-        myGamePiece.speedX = -30;      
+        myGamePiece.speedX = -10;      
     }
 }
 
 function moveright() {
-    if(myGamePiece.speedX != -30){
+    if(myGamePiece.speedX != -10){
         myGamePiece.speedY = 0;  
-        myGamePiece.speedX = 30;  
+        myGamePiece.speedX = 10;  
     }
 }
 
