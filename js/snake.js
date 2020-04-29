@@ -18,5 +18,18 @@ function component(width, height, color, x, y) {
         else{
             myGameArea.stop();
         }
-    }    
+    }
+    this.newTemp = function(){
+        myGameTails[1].x=myGamePiece.x;
+        myGameTails[1].y=myGamePiece.y;
+    }
+    this.newTemp2 = function(l){
+        myGameTails[l].x = myGameTails[l-1].x;
+        myGameTails[l].y = myGameTails[l-1].y;
+    }
+    this.newPosTail = function(l){
+        i=l-1;
+        myGameTails[l].x=myGameTails[i].x;
+        myGameTails[l].y=myGameTails[i].y;
+    }
 }
