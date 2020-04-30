@@ -27,18 +27,18 @@ function moveright() {
 }
 
 document.onkeydown = function(event) {
-        switch (event.keyCode) {
-           	case 37:
-                moveleft();
-				break;
-			case 38:
-		   		moveup();
-				break;
-           	case 39:
-		   		moveright();
-				break;
-           	case 40:
-		   		movedown();
-				break;
-        }
+    switch (event.keyCode) {
+        case 37:
+            moveleft();
+            break;
+        case 38:
+            moveup();
+            break;
+        case 39:
+            moveright();
+            break;
+        case 40:
+            movedown();
+            break;
+    }
 }

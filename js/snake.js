@@ -24,8 +24,13 @@ function component(width, height, color, x, y) {
         myGameTails[1].y=myGamePiece.y;
     }
     this.newTemp2 = function(l){
-        myGameTails[l].x = myGameTails[l-1].x;
-        myGameTails[l].y = myGameTails[l-1].y;
+        if(myGamePiece.x==myGameTails[l].x && myGamePiece.y==myGameTails[l].y && gameStat==1){
+            myGameArea.stop();
+        }
+        else{
+            myGameTails[l].x = myGameTails[l-1].x;
+            myGameTails[l].y = myGameTails[l-1].y;
+        }
     }
     this.newPosTail = function(l){
         i=l-1;
