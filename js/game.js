@@ -13,7 +13,7 @@ function startGame(j){
     myGamePiece = new component(10, 10, "blue", Math.floor(Math.random() * (myGameArea.canvas.width/10))*10, Math.floor(Math.random() * (myGameArea.canvas.height/10))*10);
     myGameTails[1]=new component(10, 10, "blue", x, myGamePiece.y);
     score=0;
-    for(var l=2;l<3;++l){
+    for(var l=2;l<4;++l){
         var x=myGamePiece.x-l*10;
         myGameTails[l]=new component(10, 10, "#aaffaa", x, myGamePiece.y);
     }    

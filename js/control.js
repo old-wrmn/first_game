@@ -1,28 +1,41 @@
 function moveup() {
-    if(myGamePiece.speedY != 10){
+    if(myGamePiece.speedY != 10&& checkY()){
         myGamePiece.speedY = -10;  
         myGamePiece.speedX = 0; 
     }
 }
 
 function movedown() {
-    if(myGamePiece.speedY != -10){
+    if(myGamePiece.speedY != -10&& checkY()){
         myGamePiece.speedY = 10;  
         myGamePiece.speedX = 0;  
     }
 }
 
 function moveleft() {
-    if(myGamePiece.speedX != 10){
+    if(myGamePiece.speedX != 10&& checkX()){
         myGamePiece.speedY = 0;  
         myGamePiece.speedX = -10;      
     }
 }
 
 function moveright() {
-    if(myGamePiece.speedX != -10){
+    if(myGamePiece.speedX != -10 && checkX()){
         myGamePiece.speedY = 0;  
         myGamePiece.speedX = 10;  
+    }
+}
+
+function checkY(){
+        if(myGameTails[2].y== myGamePiece.y){
+            return true;
+        }
+}
+
+
+function checkX(){
+    if(myGameTails[2].x== myGamePiece.x){
+        return true;
     }
 }
 
@@ -40,5 +53,6 @@ document.onkeydown = function(event) {
         case 40:
             movedown();
             break;
-    }
+    // }
+}
 }
